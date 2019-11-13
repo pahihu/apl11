@@ -13,5 +13,4 @@ How to use it:
   * change your terminal to UTF-8 support
   * run the `apl' executable
 
-**Note**: There are excellent APL implementations like Dyalog APL, NARS2000.
-Otherwise here is the code. Good luck!
+**Note**: There are excellent APL implementations like [Dyalog APL](https://www.dyalog.com), [NARS2000](http://www.nars2000.org). Otherwise here is the code. Good luck!
