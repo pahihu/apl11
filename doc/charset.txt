@@ -1,0 +1,95 @@
+APL\11 Character Set
+====================
+
+APL\11      Function                APL!        Mitloehner
+--------------------------------------------------------------------------------
+a-z          letter                 a-z         a-z             a-z
+0-9          digit                  0-9         0-9             0-9
+`            negative sign          `           _               `               C_OVERBAR
+'xx'         string                 'xx'        'xx'            'xx'
+C<bs>J    C  comment                o}          .lmp            0204    C       C_UP_SHOE_JOT
+( )                                  ( )        ( )             ( )             C_LEFT_PAR C_RIGHT_PAR
+[ ; ]        indexing               [ ; ]       [ ; ]           [ ; ]           C_LEFT_BRA C_SEMICOLON C_RIGHT_BRA
+L            quad                   @           .bx             L               C_QUAD
+L<bs>'       quote quad             `@          .qq             0202            C_QUOTE_QUAD
+             circle quad                                        0203
+             del                    ``          .dl                             C_DEL
+             delta                  &           .ld                             C_DELTA
+             delta-bar              &_          .zld                            C_DELTA_UNDERBAR
+             diamond                <>          .dm                             C_DIAMOND
+
+            Dyadic    Monadic
+            ---------------
++            add        plus        +           +               +               C_PLUS
+-            sub        negate      -           -               -               C_MINUS
+X            mult       sign        *           .ti             X 0225          C_MULTIPLY
+%            div        recip.      %           %               % 0226 0240     C_DIVIDE
+|            mod        abs         |           .ab             |               C_STILE
+D            min        floor       min         .fl             D               C_DOWN_STILE
+S            max        ceiling     max         .ce             S               C_UP_STILE
+*            pwr        exp         exp         *               P               C_STAR
+O<bs>*       log        ln          log         .lg             0207            C_CIRCLE_STAR
+O            circ.fn    pi times    circle      .lo             O               C_CIRCLE
+'<bs>.       binom      factorial   choose      !               0210            C_QUOTE_DOT
+!            binom      factorial
+^            and                    and         &               A               C_UP_CARET
+V            or                     or          .or             V               C_DOWN_CARET
+^<bs>~       nand                   nand        .nand           0205 0231 0223  C_UP_CARET_TILDE
+V<bs>~       nor                    nor         .nor            0206 0224       C_DOWN_CARET_TILDE
+<            lt                     <           <               <               C_LEFT_CARET
+>            gt                     >           >               >               C_RIGHT_CARET
+$            le                     <=          .le             0220            C_LT_OR_EQUAL
+&            ge                     >=          .ge             0221            C_GT_OR_EQUAL
+=            eq                     =           =               =               C_EQUAL
+#            ne                     ~=          .ne             0222            C_NOT_EQUAL
+~                       not         not         ~               ~ T             C_TILDE
+?            deal       rnd         deal        ?               Q               C_QUERY
+R            reshape    shape       ?           .ro             R               C_RHO
+I            idx of     idx gen     !           .io             I               C_IOTA
+E            member                 in          .ep             E               C_EPSILON
+N            encode                 encode      .en             N               C_UP_TACK
+B            decode                 decode      .de             B               C_DOWN_TACK
+\<bs>O       transp.    transp.     transpose   .tr             0212            C_CIRCLE_BACKSLASH
+,            cat.       ravel *     ,           ,               ,               C_COMMA
+Y            take                   ^           .ua             Y               C_UP_ARROW
+U            drop                   ~           .da             U               C_DOWN_ARROW
+{            assign                 <-          .is             {               C_LEFT_ARROW
+}            goto                   ->          .go             }               C_RIGHT_ARROW
+B<bs>N       i-beam     i-beam      I           .ib             0213            ?
+L<bs>%       mx div     mx inv.     solve       .dq             0214            C_QUAD_DIVIDE
+|<bs>H                  grd up *    up          .gu             0215 0227       C_DELTA_STILE
+G<bs>|                  grd down *  down        .gd             0216 0230       C_DEL_STILE
+B<bs>J                  execute     $           .xq             0241            C_UP_TACK_JOT
+N<bs>J       format     format      #           .fm             0242            C_DOWN_TACK_JOT
+/            compress *             /           /               /               C_SLASH
+/<bs>-       compress               /[!1]       .cs             0200            C_SLASH_BAR
+\            expand *               \           \               \               C_BACK_SLASH
+\<bs>-       expand                 \[!1]       .cb             0201            C_BACK_SLASH_BAR
+O<bs>|       rotatereverse *        rotate      .rv             0217            C_CIRCLE_STILE
+O<bs>-       rotatereverse                      .cr             0211            C_CIRCLE_BAR
+op /         reduce *               op /        op /            /               C_SLASH
+op /<bs>-    reduce                 op /[!1]    op .cs          .               C_SLASH_BAR
+J.op         outer product          outer.op    .so .op         J               C_JOT
+op.op        inner product          op.op       op . op         .               C_DOT
+             PSI                                                0232
+             ISP                                                0233
+
+* may be subscripted with a scalar
+
+Examples:
+
+`` z<- y escape x ; b
+o} insert escape character (1^,y) before every occurrence of y-letter in x
+b<- x in y                     o} boolean mask
+z<- ((?x)+(+/b))?(1^,y)        o} (size + extra) copies of escape character
+z[(!?x)+(+\b)]<- x             o} store x at (indices + offsets)
+
+`` z<- y replicate x
+o} loopless implementation of APL2 replicate (/) in "flat" APL
+o} e.g. 2 0 1 `2 2 replicate '@%#$' = '@@#  $$'
+z<- (+/|y)?0
+z[`1~+\(!(1),(y~=0)/|y]<- (y~=0)/!?y
+z<- ((y>=0)\x)[max\z]
+
+o} | is magnitude; (y>=0)\x is expand, put x at the 1s; max\ is iterative max
+o} origin-independence (!1) added by Tom Chwastyk

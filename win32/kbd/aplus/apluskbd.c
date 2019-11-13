@@ -1,0 +1,69 @@
+#include <apluswin32.h>
+
+#define	A(c)	(KEY_ALT|(c))
+#define	AS(c)	(KEY_ALT|KEY_SHIFT|(c))
+
+static int map[] =
+{
+	 A('1'),0x0A1,
+	AS('!'),0x0E0,
+	 A('2'),0x0A2,
+	 A('3'),0x03C,
+	AS('#'),0x0E7,
+	 A('4'),0x0A4,
+	AS('$'),0x0E8,
+	 A('5'),0x03D,
+	AS('%'),0x0F7,
+	 A('6'),0x0A6,
+	AS('^'),0x0F4,
+	 A('7'),0x03E,
+	 A('8'),0x0A8,
+	AS('*'),0x0F0,
+	 A('9'),0x0A9,
+	 A('0'),0x05E,
+	 A('-'),0x0AB,
+	AS('_'),0x021,
+	 A('='),0x0DF,
+	AS('+'),0x0AD,
+	 A('q'),0x03F,
+	 A('e'),0x0C5,
+	 A('r'),0x0D2,
+	 A('t'),0x07E,
+	 A('y'),0x0D9,
+	 A('u'),0x0D5,
+	 A('i'),0x0C9,
+	 A('o'),0x0CF,
+	 A('p'),0x02A,
+	 A('['),0x0FB,
+	AS('{'),0x0DD,
+	 A(']'),0x0FD,
+	AS('}'),0x0DB,
+	 A('s'),0x0D3,
+	 A('d'),0x0C4,
+	 A('f'),0x05F,
+	AS('F'),0x0BD,
+	AS('G'),0x0E7,
+	AS('H'),0x0E8,
+	 A('j'),0x0CA,
+	 A('k'),0x027,
+	 A(';'),0x0DB,
+	 A('\''),0x0DD,
+	 A('z'),0x0DA,
+	 A('x'),0x0D8,
+	AS('C'),0x0E3,
+	 A('v'),0x0D6,
+	 A('b'),0x0C2,
+	AS('B'),0x0E2,
+	 A('n'),0x0CE,
+	AS('N'),0x0EE,
+	 A('m'),0x0CD,
+	AS('<'),0x03C,
+	AS('?'),0x03F,
+	0,0
+};
+
+void apluskbd()
+{
+	int i;
+	for(i=0;map[i];i+=2)mapch(map[i],map[i+1]);
+}

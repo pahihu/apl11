@@ -1,0 +1,32 @@
+( FCNTL.FO V1.0         The constants used for the low level file I/O words )
+
+( WARNING: These values are what is used on the MIPS Workstation,
+           they may have to be modified for other platforms )
+
+
+( constants used by OPEN )
+
+   0 CONSTANT O_RDONLY       \ open for reading only
+   1 CONSTANT O_WRONLY       \ open for writing only
+   2 CONSTANT O_RDWR         \ open for reading and writing
+   4 CONSTANT O_NDELAY       \ do not block on open
+   8 CONSTANT O_APPEND       \ append on each write
+ 256 CONSTANT O_CREAT        \ create file if it does not exist
+ 512 CONSTANT O_TRUNC        \ truncate size to 0
+1024 CONSTANT O_EXCL         \ error if create and file exists
+
+
+( constants used by LSEEK )
+
+   0 CONSTANT L_SET          \ absolute offset, set file pointer directly
+   1 CONSTANT L_INCR         \ relative offset, increment file pointer
+   2 CONSTANT L_XTND         \ relative to end of file,
+			     \ ( set file pointer to specified distance beyond EOF )
+
+( common alternative names to the above 3 )
+
+   L_SET  CONSTANT SEEK_SET
+   L_INCR CONSTANT SEEK_CUR
+   L_XTND CONSTANT SEEK_END
+
+

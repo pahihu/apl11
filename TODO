@@ -1,0 +1,41 @@
+APL\11 with APL! translation
+============================
+
+080523
+- EDITOR defaults to notepad.exe, SHELL to cmd.exe
+-	o} added
+- times() returns in 1/60 seconds
+- sleep() sleeps for seconds
+- @SPAWN added, not tested
+- Mitloehner's sytem turned off (outer.exp)
+- tm_year taken with mod 100, (y-1900>100!)
+
+080525
+- null-dimension fix in solve, inner-product (GRAMSCH.11)
+
+080527
+- 'ip'@TCP (p,k) added, tested
+- @WAIT pid, implements waitpid() like functionality
+
+080609
+- '/' as replicate (tested on vectors)
+- take/drop conformability fix (dropped p, instead of q!)
+- fix SIGSEGV in ex_crp when function not found
+
+080610
+- getdat() inline
+- primes 9333msec
+
+080611
+- does not checks OBJS at any place...
+- open/creat on MINGW uses O_TEXT by default, wrappers for open/creat!
+
+
+Bugs
+- when an undefined var used, it clears all vars?
+
+Enhancements
+- user-defined function as compress operator?
++ APLMATH wks translation
++ socket interface
+- ffi

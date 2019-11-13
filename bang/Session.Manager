@@ -1,0 +1,17 @@
+There is a generic Unix session manager called fep (Front End Processor) that 
+works very well with APL!.  The only change I made to it is line 1394 of 
+fep_edit.c, the history magic character '!' to '^'.  To use it, simply enter
+
+fep apl11.sparc        (emacs binding)  ^P prev  ^N next  ^F forward  ^B back
+fep -vi apl11.sparc    (vi binding)     use Esc, i to toggle cursor/insert mode 
+                                        use hjkl for left, down, up, right
+
+Also, try
+  ^ last command
+  ^number 
+  ^-number
+
+The file fep.tar contains source code, documentation, and copyright notice.
+fep is Copyright (c) 1987,1988 by Software Research Associates, Inc.
+
+-- Bill Chang (wchang@cshl.org)

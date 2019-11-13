@@ -1,0 +1,128 @@
+At APL93, I put up a one-page poster with the title "APL! -- A simple,
+intuitive, and terse rendition of APL as ASCII".  Alas, it was successful
+beyond my wildest dreams--it was stolen, TWICE.  Not wanting to give in to this
+act of terrorism, I made a hundred copies and handed them out.  "APL bang" was
+first posted to comp.lang.apl on March 30, 1992; an earlier but totally
+different attempt called "APL slash bang" was posted on December 31, 1991.  
+Anyway, I'm prompted by the recent discussion on c.l.a. to post the contents 
+of "APL!" (slightly edited) for those who have not seen it.
+
+-- Bill Chang (wchang@cshl.org)                                  
+
+=============================================================================
+
+                                  APL!
+        A simple, intuitive, and terse rendition of APL as ASCII
+ 
+                              William Chang
+                     Cold Spring Harbor Laboratory, NY
+                       516-367-8866 wchang@cshl.org
+
+Intuitive:   ! iota     (upside-down i; factorial is product of 1 2 ... n)
+==========   ? rho      (looks like rho; query array for its shape)
+only 6 APL   ^ take     (looks like up-arrow; head)
+symbols w/   ~ drop     (tail; array less head)
+nonobvious   # execute  (to number)
+ASCII        $ format   (to string)
+
+remaining    /[@IO] or /[!1]  \[@IO] or \[!1] (slash-bar etc. unnecessary)
+conversions  * times  % divide  `1 negatives  ` del
+             <-  ->  ~=  <=  >=  (translator inserts space for actual < - etc.)
+             @ quad "@ quote-quad  & delta &_ delta-bar  <> diamond  o} comment
+
+Simple:      all other APL operations are converted to DYADIC FUNCTION NAME*
+=======
+only 21      rotate (reverse is rotate by 180 degrees) rotate[@IO] (1st axis)
+keywords,    transpose in up down encode decode max min not and or nand nor
+fewer        choose circle deal solve exp log outer
+than C
+            *A conversion program cannot always distinguish monadic from dyadic
+             use in an expression "A op B" (well-known problem with APL syntax),
+             so it is better to use dyadic form uniformly and consistently.
+
+Terse:       According to APL usage statistics: "In general, 80% of all APL
+======       usage occurred with 20% of the available function set" (Kanner,
+Mona/Dyadic  "The use and disuse of APL, an empirical study" in APL82).
+,-   ,[]/+=- In particular, the six functions iota rho take drop execute format
+rho   take   are most often used to get arrays to conform or as "control
+iota  drop   structures", kind of the overhead of writing APL programs.
+fmt    rho   If they are given keywords, programs (lines) become much longer.
+exec  times  But if they are given (good-looking) symbols, then programs will
+     unequal remain terse even when keywords are used for other functions.
+------------ 
+ 80%   84% of use
+
+Implementation:  I have functions to translate in both directions, using
+idiomatic (mostly loopless) APL.  One direction is by table-lookup, the other
+direction by executing (actually @EA) strings of comma-separated keywords.  
+
+I like the APL symbols just like everyone else, but had to invent an ASCII 
+translation to use over the phone line.
+
+=============================================================================
+Some common APL idioms in APL! (!iota ?rho ^take ~drop/not *times `negative)
+ 
+  ?A   "shape A"        ??A  "rank A"          (?B)?A  "B-shape A"
+  !10  "initial ten"    !?A  "indices of A"    B!A     "B-indices of A"
+ 
+  ((!?A)=A!A)/A   "A minus duplicates"
+                   [indices of A equal A-indices of A, subset A]
+ 
+  +/and\             "find first zero" [sum all-1-left-partials (iterative and)]
+  +/and\rotate' '=A  "count trailing blanks (for every row)"
+                       [find first zero, backwards (rotate by 180), in ' '=A]
+ 
+  (-+/and\rotate' '=A)~A         "A less trailing blanks"
+  (-+/and\rotate' '=A) rotate A  "right-justify A (matrix or vector)"
+                          [row-wise circular shift, trailing blanks to front]
+ 
+  (!10) outer.*(!10) "ten-by-ten multiplication table"
+  A+.*B              "matrix product"
+  A min.+A           "shortest paths, one stop-over"
+ 
+  ->(cond)/label   ->(cond)?label   ->(cond)^label   "goto label if cond"
+  ->(~cond)/label  ->(~cond)?label  ->(cond)~label   "goto label if not cond"
+  ->(cond,...,cond)/labels    "select label corresponding to first true cond"
+ 
+Index origin can be set (whether !n starts with 1 or 0)
+ 
+  ' *'[' '~=A]   "show nonblanks as * (origin 0)"
+ 
+  ->label-!cond  "conditional goto (origin 0)"      ->label*!cond  "(origin 1)"
+  ->!cond        "conditional exit (origin 0)"      ->0*!cond      "(origin 1)"
+  ->(&+1)-!~cond <> ... "if-statement (origin 0; & returns current line number)"
+  ... <> ->&-!cond      "one-line loop (origin 0)"
+ 
+Loopless APL to insert escape character
+
+  `` z<- y escape x ; b
+  o} insert escape character (1^,y) before every occurrence of y-letters in x
+
+  b<- x in y                o} boolean mask
+  z<- ((?x)+(+/b))?(1^,y)   o} (size + extra) copies of escape character
+  z[(!?x)+(+\b)]<- x        o} store x at (indices + offsets)
+
+A harder example (replicate)
+ 
+  `` z<- y replicate x
+  o} loopless implementation of APL2 replicate (/) in "flat" APL
+  o} e.g. 2 0 1 `2 2 replicate '@%#$' = '@@#  $$'
+ 
+  z<- (+/|y)?0 <> z[`1~+\(!1),(y~=0)/|y]<- (y~=0)/!?y <> z<- ((y>=0)\x)[max\z]
+ 
+  o} | is magnitude; (y>=0)\x is expand, put x at the 1s; max\ is iterative max
+  o} origin-independence (!1) added by Tom Chwastyk
+=============================================================================
+ANNOUNCEMENT   APL11!  now available by ftp  (contact wchang@cshl.org)
+
+APL\11 is an old APL interpreter written in C, that has recently become
+"freeware" thanks to the effort of Michael Caine.  I have hacked it so it
+understands both APL! and a transliteration due to Mitloehner.  To retrieve 
+it, anonymous ftp to cshl.org, and get the following files in directory 
+pub/bill/apl: apl11.src.tar lex.c tab.c quadav .
+ 
+I hope some generous hacker will pick up the ball from here.  (Please send me
+a note if you try it out.)  The files Toronto.bang (Richard Levine's Toronto 
+Toolkit) and bang.sed may also be of interest.  Does anyone know of a 
+public-domain APL tutorial or idiom list, that I can freely distribute?
+=============================================================================

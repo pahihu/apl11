@@ -1,0 +1,94 @@
+APL! Character Set
+==================
+
+APL!        Function                    APL\11
+--------------------------------------------------------------------------------
+a-z          letter                     a-z
+0-9          digit                      0-9
+`            negative sign              `
+'xx'         string                     'xx'
+o}           comment                    C<bs>J  C
+( )                                     ( )
+[ ; ]        indexing                   [ ; ]
+@            quad                       L
+`@           quote quad                 L<bs>'
+             circle quad            
+``           del
+&            delta
+&_           delta-bar
+<>           diamond
+
+            Dyadic    Monadic
+            ---------------
++            add        plus            +
+-            sub        negate          -
+*            mult       sign            X
+%            div        recip.          %
+|            mod        abs             |
+min          min        floor           D
+max          max        ceiling         S
+exp          pwr        exp             *
+log          log        ln              O<bs>*
+circle       circ.fn    pi times        O
+choose       binom      factorial       !
+and          and                        ^
+or           or                         V
+nand         nand                       ^<bs>~
+nor          nor                        V<bs>~
+<            lt                         <
+>            gt                         >
+<=           le                         $
+>=           ge                         &
+=            eq                         =
+~=           ne                         #
+not                     not             ~
+deal         deal       rnd             ?
+?            reshape    shape           R
+!            idx of     idx gen         I
+in           member                     E
+encode       encode                     N
+decode       decode                     B
+transpose    transp.    transp.         \<bs>O
+,            cat.       ravel *         ,
+^            take                       Y
+~            drop                       U
+<-           assign                     {
+->           goto                       }
+I            i-beam     i-beam          B<bs>N
+solve        mx div     mx inv.         L<bs>%
+up                      grd up *        |<bs>H
+down                    grd down *      G<bs>|
+$                       execute         B<bs>J
+#            format     format          N<bs>J
+/            compress *                 /
+/[!1]        compress                   /<bs>-
+\            expand *                   \
+\[!1]        expand                     \<bs>-
+rotate       rotatereverse *            O<bs>|
+             rotatereverse              O<bs>-
+op /         reduce *                   op /
+op /[!1]     reduce                     op /<bs>-
+outer.op     outer product              J.op
+op.op        inner product              op.op
+             PSI
+             ISP
+
+* may be subscripted with a scalar
+
+Examples:
+
+`` z<- y escape x ; b
+o} insert escape character (1^,y) before every occurrence of y-letter in x
+b<- x in y                     o} boolean mask
+z<- ((?x)+(+/b))?(1^,y)        o} (size + extra) copies of escape character
+z[(!?x)+(+\b)]<- x             o} store x at (indices + offsets)
+
+`` z<- y replicate x
+o} loopless implementation of APL2 replicate (/) in "flat" APL
+o} e.g. 2 0 1 `2 2 replicate '@%#$' = '@@#  $$'
+z<- (+/|y)?0
+z[`1~+\(!(1),(y~=0)/|y]<- (y~=0)/!?y
+z<- ((y>=0)\x)[max\z]
+
+o} | is magnitude; (y>=0)\x is expand, put x at the 1s; max\ is iterative max
+o} origin-independence (!1) added by Tom Chwastyk

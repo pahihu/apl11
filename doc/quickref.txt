@@ -1,0 +1,101 @@
+Sys Cmds
+
+)clear                  clear ws
+)erase lst              remove only lst from ws
+)save fnm               save ws
+)vsave fnm              partial ws save
+)load fnm               load ws, replace curr ws
+)copy fnm               like )load, but don't replace curr ws
+)digits n               how many digits printed (def 9)
+)origin n               chg origin (def 1)
+)width n                spec terminal width
+)off                    terminate session
+)continue               combination of )save contine, )off
+)fns                    lst of fns
+)vars                   lst of vars
+)lib                    lst of curr dir
+)editf fn               (create) and edit fn, using EDITOR (def vile)
+)edit fnm               edits file, then )read fnm
+)read fnm               read fn from ext fnm
+)write fn               save fn in ext file "fn"
+)drop lst               rm the spec files
+)script fnm             save transcript to fnm
+)script off             turn off script file
+)trace                  report fn and lno during xeq
+)untrace                turn off trace mode
+)si                     traceback of suspended fns
+)reset                  reset the state indicator
+)shell                  escape to shell, using SHELL (def /bin/sh)
+)list fn                print source of fn
+)prws                   print contents of ws in readable fmt
+)debug                  invoke debug mode, development only
+)code fn                print internal compiled code for fn
+)memory                 curr dyn mem usage
+
+Quad Expr
+@lx                     latent expr, exec on )load
+
+Quad Fns
+@cr 'fn'                char array of fn
+@fx newfn               compile char array as fn
+@run 'unx cmd'          exec cmd in UNIX shell
+@fork dmy               pid of child, or 0
+@exec mx                2dim char mx, rows 0 terminated
+@wait xx                ret 3-elt vector: pid/-1 stat completion-code
+@exit code              terminate current process
+@pipe xx                setup a pipe, returns 2-element vector: fd of "pipe"
+@chdir 'dir'            chg dir
+mode @open 'file'       mode: 0-rd, 1-wr, 2-rw, fd returned
+@close fd               close fd
+mode @creat 'file'      create a file, if exists truncate to zero
+fd @read nbytes         read nbytes from fd, always return char vector
+fd @write data          returns nbytes written, any type of data may be written
+@seek (fd,pos,mode)     seek syscall
+pid @kill sig           kill syscall
+@rd fd                  read one line from fd, blank line/EOF returns null str
+@rm 'filename'          equ )drop filename
+@dup fd                 dup syscall
+fd @ap 'string'         append char str to end of file, CR is appended to the 
+                        end of each row
+@rline fd               like @rd
+@nc 'arg'               type of var/sym: 0 - undef, 2 - lab/var, 3 - fn, 
+                        4 - unknown
+@nl arg                 scalar/vector with 1-3 elements, ret name of all items
+                        whose types are spec in the vector
+sig @sig act            act: 0 - terminate APL, non-zero - ignore
+@float chrvec           cvt @read result into numeric form
+
+
+I-Beams
+20            TOD as 1/60 secs
+21            CPU time used in 1/60 secs
+22            bytes left in ws
+24            curr sess start as TOD in 1/60
+25            curr date: mmddyy
+26            curr lno in fn
+27            vector of lnos pending (fns which called curr fn)
+28            curr sess start date (6-digit)
+29            curr origin, set by )origin
+30            curr width, set by )width
+31            curr digitno, set by )digits
+32            used ws bytes
+36            lno of fn, which called the curr fn (2nd element of I27)
+40            total amount of CPU time spent by APL and any child procs
+41            total amount of "user" time spent by APL and any child procs
+42            total amount of "system" time spent by APL and any child procs
+43            total amount of "user" time spent by APL
+44            total amount of "system" time spend by APL
+96            dump stk on terminal
+97            total num of elts on internal stk
+98            turn off all memalloc/dealloc
+99            tunr on alloc/free trace
+
+Dyadic I-Beams (arg Ibeam)
+29            set origin
+30            set width
+31            set ndigits
+34            sys nice, set prio of APL to left arg
+35            sys sleep
+63            sys pipe empty: 1 - empty, 0 - not empty, -1 - illegal fd
+90            0 - disable safety exit on EOF, non-zero - require )off, )continue
+99            flush fd

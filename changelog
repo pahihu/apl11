@@ -1,0 +1,80 @@
+191113
+------
+        macOS Dyalog APL APL385 Unicode layout
+191111
+------
+        doc directory, charset fixes, APL! quick reference, added @lx
+150119
+------
+	Clang warnings turned off
+	_fds[], _nfds to track open/creat files
+	lseek() compiler needs fn decls
+140416
+------
+	makefile clean-up
+	charset.ods: APL\1130, APL*CYBER, APLSF, STSC APLSE, Iverson-scheme etc.
+140415
+------
+	Mac OS X 32-bit port, unxcon.c
+140408
+------
+	Mingw port of VC6
+	makefile - define USE_APLFONT to include APLFONT support
+	APL! version
+
+120318
+------
+a0.c
+	- WIN32 tempnam used
+	- after wsload the file is not closed ???
+	- size check in newdat()
+	- WIN32 memcpy used in copy()
+a1.c
+	- SPAWN, TCP added
+a2.c
+	- printf11 rewrite with <stdarg.h>
+a7.c
+	- check for empty matrix in ex_iprod()
+a8.c
+	- check for empty matrix in ex_ddom()
+a9.c
+	- fix for datum
+aa.c
+	- EX_LEXGRADE alternativ gdu() gdd() implementation
+ab.c
+	- fix a bug in td1()
+ad.c
+	- EX_REPL alternative in comk() com1()
+ai.c
+	- default editor is notepad in funedit()
+	- default shell is cmd in ex_shell()
+aj.c
+	- check for write error in nsave()
+	- WIN32 fix in listdir()
+	- tm_year mod 100 in fdat()
+al.c
+	- check for NULL np in ex_crp()
+	- clear error msg in ex_dfmt()
+apl.h
+	- redefine printf as printf11
+	- MSIZE define for max size (1<<30) for 32-bit (1GByte)
+	- SPAWN, TCP added
+	- WIN32 create(), open(), read(), write(), close() wrappers
+apl.y
+	- added extern declaration for name()
+at.c
+	- SPAWN, TCP added
+ax.c
+	- changed error handling in fpe()
+az.c
+	- WIN32 fix in ex_wait()
+	- refactor ex_exec() into toargv()
+	- ex_spawn(), ex_tcp() added
+	- b changed to static in iofname()
+lex.c
+	- Mitloehner stripped off
+	- added o} as lamp
+	- MONADMIN ala S.Sirlin
+tab.c
+	- SPAWN,TCP added
+

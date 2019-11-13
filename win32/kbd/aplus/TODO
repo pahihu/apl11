@@ -1,0 +1,15 @@
+TODO for APlus
+==============
+
+080606AP	cgetsex line editor, session.log, msync()
+
+
++ not so intrusive port (mingw32/include tree prepended!)
++ console with A+ keyboard mapping (KAPLCON.FON converted from KAPL.TTF)
++ poly.a (http://dan.corlan.net/bench.html)
+		GCC 3.4.4							 530msec	(tepol2.c)
+		KDB+ 2.4 2008.03.31		1730msec
+		A+ 4.22								3350msec
+
+- read/write usage in IPC (check for sockets!)
+- synchronize with the old tree
