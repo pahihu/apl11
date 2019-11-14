@@ -6,6 +6,12 @@ printf11(char *fmt,...);
 extern int chartab[];
 char *ecvt();
 
+static
+putstr(unsigned char *s)
+{
+  while (*s) putchar(*s++);
+}
+
 ex_print()
 {
 	if(epr0()) putchar('\n');
@@ -98,7 +104,7 @@ int *param;
 	if(a < 0) a = 0;
 	if(a > param[2]) param[2] = a;			/* digits to right of dp */
 	if(dp > param[1]) param[1] = dp;		/* digits to left of dp */
-	param[3] |= sg;							/* and sign */
+	param[3] |= sg;					/* and sign */
 }
 
 epr2(d, param)
@@ -106,6 +112,7 @@ int *param;
 data d;
 {
 	int i, dp, sg;
+        char *sgout;
 	char *c, *mc;
 	double f;
 
@@ -118,9 +125,9 @@ data d;
 	if (f == zero) dp = 1;					/* kludge due to change in ecvt */
 	mc = c + thread.digits;
 	putchar(' ');
-	sg = sg? MONADMIN: ' ';						/* '-' used to be '"' */
+	sgout = sg? MONADMIN: " ";				/* '-' used to be '"' */
 	if(param[2] < 0) {
-		if(param[3]) putchar(sg);
+		if(param[3]) putstr(sgout);
 		for(i=0; i<param[1]; i++) {
 			putchar(*c++);
 			if(i == 0) putchar('.');
@@ -128,7 +135,7 @@ data d;
 		putchar('e');
 		dp--;
 		if(dp < 0) {
-			putchar(MONADMIN);					/* '=' used to be '"' */
+			putstr(MONADMIN);					/* '=' used to be '"' */
 			dp = -dp;
 		}
 		else putchar('+');					/* apl style plus sign, used to be ':' */
@@ -139,7 +146,7 @@ data d;
 	i = dp;
 	if(i < 0) i = 0;
 	for(; i<param[1]; i++) putchar(' ');
-	if(param[3]) putchar(sg);
+	if(param[3]) putstr(sgout);
 	for(i=0; i<dp; i++) {
 		if(c >= mc) putchar('0');
 		else putchar(*c++);
@@ -310,7 +317,7 @@ putn(n)
 			printf("32768");
 			return;
 		}
-		putchar(MONADMIN);				/* apl minus sign, was '"' */
+		putstr(MONADMIN);				/* apl minus sign, was '"' */
 	}
 	if (a = n / 10) putn(a);
 	putchar(n % 10 + '0');

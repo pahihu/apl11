@@ -566,7 +566,7 @@ loop:
 
 	case QD:
 	case QC:
-		printf("%c:\n\t",MONADQUAD);
+		printf("%s:\n\t",MONADQUAD);
 		i = rline(8);
 		if(i == 0) error("eof");
 		c = compile(i, 1);

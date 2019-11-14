@@ -227,7 +227,7 @@ yylex()
     if(alpha(c)) return(getnam(c));
 
     if(digit(c) || (c=='.' && digit(*iline)) ||
-       (c == MONADMIN && (digit(*iline) || *iline=='.'))) return(getnum(c));
+       (c == C_OVERBAR && (digit(*iline) || *iline=='.'))) return(getnum(c));
 
     /* APL! symbols */
     if (c=='<' && *iline=='-') { c='{'; ++iline; };
@@ -368,7 +368,7 @@ getnum(ic)
     n = 0;
     d1 = 0.;
     c = ic;
-    if(c == MONADMIN) {                    /* '`' was '"' */
+    if(c == C_OVERBAR) {                    /* '`' was '"' */
         s++;
         c = *iline++;
     }
@@ -388,7 +388,7 @@ getnum(ic)
         s1 = 0;
         n1 = 0;
         c = *iline++;
-        if(c == MONADMIN) {                /* '`' was '"' */
+        if(c == C_OVERBAR) {                /* '`' was '"' */
             s1++;
             c = *iline++;
         }

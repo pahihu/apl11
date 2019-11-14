@@ -20,11 +20,12 @@
 #endif
 
 #ifdef APLFONT_NAME
-#define	MONADQUAD	C_QUAD
-#define	MONADMIN	C_OVERBAR
+#define	MONADQUAD	S_QUAD
+#define	MONADMIN	S_OVERBAR
 #else
-#define MONADQUAD	'L'
-#define MONADMIN	'`'
+#define MONADQUAD	"L"
+#define MONADMIN	"`"
+#define C_OVERBAR       '`'
 #endif
 
 #define printf		printf11

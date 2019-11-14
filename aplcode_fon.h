@@ -3,6 +3,9 @@
 
 #define APLFONT_NAME	        "APL385UNI"
 
+#define S_QUAD                  "\xE2\x8E\x95"
+#define S_OVERBAR               "\xC2\xAF"
+
 #define C_UP_SHOE		0x235D
 #define C_DIAERESIS		0x00A8
 #define	C_OVERBAR		0x00AF

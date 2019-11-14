@@ -1,6 +1,6 @@
 #
 # 140408 define USE_APLFONT to include APLFONT handling
-#
+# 191114 copy the font definitio file to aplcode_fon.h
 
 FEATURES= -DUSE_APLFONT=1
 
