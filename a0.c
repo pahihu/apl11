@@ -191,6 +191,25 @@ intprws()
 	term(0177);
 }
 
+static
+int utf8_begin(unsigned char c)
+{
+        return (c < 128) || (c > 192);
+}
+
+static
+int bksp(int col,unsigned char *p)
+{
+        if (col) {
+#ifdef _DYALOG_UTF8_H
+                while (col-- && !utf8_begin(*p--));
+#else
+                col--;
+#endif
+        }
+        return col;
+}
+
 char *
 rline(s)
 {
@@ -216,7 +235,7 @@ loop:
 		return(0);
 
 	case '\b':
-		if(col) col--;
+                col = bksp(col, p);
 		goto loop;
 
 	case '\t':
