@@ -1,5 +1,18 @@
 #include <signal.h>
 #define BUILD_APL
+#include <stdio.h>
+void
+dumpstr(char *s,char *e)
+{
+        while (s<e) printf("%02X ",*s++);
+        printf("\n");
+}
+void
+dumpc(int old_c, int c)
+{
+        printf("\nold_c = %X c = %X",old_c,c);
+}
+
 #include "apl.h"
 
 extern int	chartab[];
@@ -252,13 +265,14 @@ loop:
 
 	default:
 		*p++ = col;
-		*p++ = c;					/* was and'ed with 0177... */
+		*p++ = c;			/* was and'ed with 0177... */
 		col++;
 		goto loop;
 
 	case '\n':
 		;
 	}
+        /* dumpstr(line, p); */
 	qsort(line, (p-line)/2, 2, rlcmp);
 	c = p[-2];
 	if(p == line) c = 1;			/* check for blank line */
@@ -299,6 +313,7 @@ yuck:
 	}
 	*++cp = '\n';
 	ttyanswer();
+        /* dumpstr(retval,cp); */
 	return(retval);
 }
 

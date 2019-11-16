@@ -132,6 +132,7 @@ yylex()
 
         old_c = c;
         new_iline = utf8_decode(iline-1, &c);
+        /* dumpc(old_c, c); */
         if (c != -1) {          /* decoded as UTF-8 */
 #endif
 	//XLT(C_OVERBAR,'`')

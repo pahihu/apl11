@@ -17,7 +17,7 @@
 #define	C_NOT_EQUAL		0x2260
 #define	C_DOWN_CARET		0x2228
 #define	C_UP_CARET		0x2227
-#define	C_MULTIPLY		0xab
+#define	C_MULTIPLY		0x00d7
 #define	C_DIVIDE		0x00F7
 #define	C_QUERY 		0x3f
 #define	C_EPSILON		0x220A
