@@ -31,6 +31,45 @@
 
 int xxpeek[2] = {0,0};
 
+extern unsigned char* utf8_decode(unsigned char*, int*);
+
+unsigned char *prev_iline = 0;
+
+static
+int PEEK(void)
+{   int cc;
+    unsigned char *ptr;
+
+    prev_iline = iline;
+#ifdef _DYALOG_UTF8_H
+    ptr = utf8_decode(iline, &cc);
+    if (-1 == cc)
+        cc = *iline;
+#else
+    cc = *iline;
+#endif;
+    return cc;
+}
+
+static
+int NEXT(void)
+{   int cc;
+    unsigned char *ptr;
+
+#ifdef _DYALOG_UTF8_H
+    ptr = utf8_decode(iline, &cc);
+    if (-1 == cc)
+        cc = *iline++;
+    else
+    {   prev_iline = iline;
+        iline = ptr;
+    }
+#else
+    cc = *iline++;
+#endif
+    return cc;
+}
+
 yylex()
 {
     int c, rval;
@@ -42,7 +81,7 @@ yylex()
         return(c);
     }
     while(litflag > 0) {            /* comment */
-        c = *iline++;
+        c = NEXT();
         if(c == '\n') {
             nlexsym = 0;
             return(eol);
@@ -54,7 +93,7 @@ yylex()
         return(xxpeek[1]);
     }
     do
-        c = *iline++;
+        c = NEXT();
     while(c == ' ');
     if(c == '\n') {
         nlexsym = 0;
@@ -65,7 +104,7 @@ yylex()
 
 #if 0
     /* Mitloehner's system, .keyword */
-    if ((c=='.' || c=='`') && alpha(*iline))
+    if ((c=='.' || c=='`') && alpha(PEEK()))
     {
       if (0==strncasecmp(iline,"in",2)) c='E';
       if (0==strncasecmp(iline,"or",2)) c='V';
@@ -124,17 +163,6 @@ yylex()
 #ifdef APLFONT_NAME
 #define XLT(a,x) if (c == a) c = x;
 
-#ifdef _DYALOG_UTF8_H
-    extern unsigned char* utf8_decode(unsigned char*, int*);
-    {
-        int old_c;
-        unsigned char *new_iline;
-
-        old_c = c;
-        new_iline = utf8_decode(iline-1, &c);
-        /* dumpc(old_c, c); */
-        if (c != -1) {          /* decoded as UTF-8 */
-#endif
 	//XLT(C_OVERBAR,'`')
 	XLT(C_UP_SHOE_JOT,0204)
 	XLT(C_QUAD,'L')
@@ -179,15 +207,8 @@ yylex()
 	XLT(C_CIRCLE_BAR,0211)
 	XLT(C_JOT,'J')
 #ifdef _DYALOG_UTF8_H
-        /* if char translated then accept new iline ptr */
-        if (c != old_c)
-          iline = new_iline;
-        }
-        else 
-        { /* unknown UTF-8 sequence */
-          c = old_c;
-        }
-    }
+        XLT(C_DELTA,0236)
+        XLT(C_DELTA_UNDERBAR,0237)
 #endif
 #endif
 
@@ -227,8 +248,8 @@ yylex()
 
     if(alpha(c)) return(getnam(c));
 
-    if(digit(c) || (c=='.' && digit(*iline)) ||
-       (c == C_OVERBAR && (digit(*iline) || *iline=='.'))) return(getnum(c));
+    if(digit(c) || (c=='.' && digit(PEEK())) ||
+       (c == C_OVERBAR && (digit(PEEK()) || PEEK()=='.'))) return(getnum(c));
 
     /* APL! symbols */
     if (c=='<' && *iline=='-') { c='{'; ++iline; };
@@ -263,7 +284,7 @@ yylex()
                                         of the line and return eol instead.  */
     if (lv.charval == COMNT) {
         while (1) {
-            c = *iline++;
+            c = NEXT();
             if (c == '\n') {
                 nlexsym = 0;
                 return(eol);
@@ -371,31 +392,31 @@ getnum(ic)
     c = ic;
     if(c == C_OVERBAR) {                    /* '`' was '"' */
         s++;
-        c = *iline++;
+        c = NEXT();
     }
     while(digit(c)) {
         d1 = d1*10. + c - '0';
-        c = *iline++;
+        c = NEXT();
     }
     if(c == '.') {
-        c = *iline++;
+        c = NEXT();
         while(digit(c)) {
             d1 = d1*10. + c - '0';
-            c = *iline++;
+            c = NEXT();
             n--;
         }
     }
     if(c == 'e') {
         s1 = 0;
         n1 = 0;
-        c = *iline++;
+        c = NEXT();
         if(c == C_OVERBAR) {                /* '`' was '"' */
             s1++;
-            c = *iline++;
+            c = NEXT();
         }
         while(digit(c)) {
             n1 = n1*10 + c - '0';
-            c = *iline++;
+            c = NEXT();
         }
         if(s1) n -= n1;
         else n += n1;
@@ -407,7 +428,7 @@ getnum(ic)
     if(n < 0) d1 /= d2;
     else d1 *= d2;
     if(s) d1 = -d1;
-    iline--;
+    iline = prev_iline;
     datum = d1;
     return(numb);
 }
@@ -422,6 +443,10 @@ alpha(s)
         || (c == 'F')
         || (c == '_')  /* added by William Chang */
         || (c == '&')  /* added by William Chang */
+#ifdef _DYALOG_UTF8_H
+        || (c == 0236) /* 191118AP delta */
+        || (c == 0237) /* 191118AP delta underbar */
+#endif
         // || (c >= 0243) /* 101004AP alternate character set Fa,... */
         || (litflag == -2 && (
                c == '/'

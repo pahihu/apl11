@@ -4,7 +4,8 @@
 void
 dumpstr(char *s,char *e)
 {
-        while (s<e) printf("%02X ",*s++);
+        if(e) while(s<e) printf("%02X ",*s++);
+        else while(*s) printf("%02X ",*s++);
         printf("\n");
 }
 void

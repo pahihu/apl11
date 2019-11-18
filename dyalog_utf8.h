@@ -5,6 +5,8 @@
 
 #define S_QUAD                  "\xE2\x8E\x95"
 #define S_OVERBAR               "\xC2\xAF"
+#define S_DELTA                 "\xE2\x88\x86"
+#define S_DELTA_UNDERBAR        "\xE2\x8d\x99"
 
 #define C_UP_SHOE		0x235D
 #define C_DIAERESIS		0x00A8

@@ -372,8 +372,8 @@ getchar()
 
 putchar(d)
 {
-	char c;
-	int i;
+	char c, *p;
+	int i, n;
 
 	c = d;
 	if(mencflg) {
@@ -413,14 +413,20 @@ putchar(d)
 	if (column > thread.width) printf("\n    ");
 
 	if(intflg == 0) {
+                n=1; p=&c;
+#ifdef _DYALOG_UTF8_H
+                if ((c & 0177) == 036){p=S_DELTA;n=3;}
+                else if ((c & 0177) == 037){p=S_DELTA_UNDERBAR;n=3;};
+#else
 		if(!isatty(ifile) && (c & 0200)) {
 			i = chartab[c & 0177];
 			putchar(i>>8);
 			c = i & 0177;
 			putchar('\b');
 		}
-		if(protofile) write(protofile, &c, 1);
-		write(1, &c, 1);
+#endif
+		if(protofile) write(protofile, p, n);
+		write(1, p, n);
 	}
 }
 
