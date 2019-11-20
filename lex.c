@@ -207,8 +207,10 @@ yylex()
 	XLT(C_CIRCLE_BAR,0211)
 	XLT(C_JOT,'J')
 #ifdef _DYALOG_UTF8_H
-        XLT(C_DELTA,0236)
-        XLT(C_DELTA_UNDERBAR,0237)
+        XLT(C_DELTA,0275)
+        XLT(C_DELTA_UNDERBAR,0276)
+        XLT(C_ALPHA,0277)
+        XLT(C_OMEGA,0300)
 #endif
 #endif
 
@@ -444,8 +446,10 @@ alpha(s)
         || (c == '_')  /* added by William Chang */
         || (c == '&')  /* added by William Chang */
 #ifdef _DYALOG_UTF8_H
-        || (c == 0236) /* 191118AP delta */
-        || (c == 0237) /* 191118AP delta underbar */
+        || (c == 0275) /* 191118AP delta */
+        || (c == 0276) /* 191118AP delta underbar */
+        || (c == 0277) /* alpha */
+        || (c == 0300) /* omega */
 #endif
         // || (c >= 0243) /* 101004AP alternate character set Fa,... */
         || (litflag == -2 && (

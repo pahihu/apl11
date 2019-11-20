@@ -300,10 +300,17 @@ int     chartab[] = {
     'Ft',
     'Fu',
     'Fv',
-    'Fw',
+    'Fw',       /* 0271 */
     'Fx',
     'Fy',
-    'Fz',
+    'Fz',       /* 0274 */
+/*
+ * Misc. symbols.
+ */
+    '&&',       /* 0275 delta */
+    '&_',       /* 0276 delta underbar */
+    'Ga',       /* 0277 alpha */
+    'Gw',       /* 0300 omega */
     0
 };
 
