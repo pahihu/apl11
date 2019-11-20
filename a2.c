@@ -414,19 +414,19 @@ putchar(d)
 
 	if(intflg == 0) {
                 n=1; p=&c;
-#ifdef _DYALOG_UTF8_H
-                     if ((c & 0177) ==  075){p=S_DELTA;n=3;}
-                else if ((c & 0177) ==  076){p=S_DELTA_UNDERBAR;n=3;}
-                else if ((c & 0177) ==  077){p=S_ALPHA;n=3;}
-                else if ((c & 0177) == 0100){p=S_OMEGA;n=3;};
-#else
 		if(!isatty(ifile) && (c & 0200)) {
+#ifdef _DYALOG_UTF8_H
+                        if ((c & 0177) ==  075){p=S_DELTA;n=3;}
+                        else if ((c & 0177) ==  076){p=S_DELTA_UNDERBAR;n=3;}
+                        else if ((c & 0177) ==  077){p=S_ALPHA;n=3;}
+                        else if ((c & 0177) == 0100){p=S_OMEGA;n=3;};
+#else
 			i = chartab[c & 0177];
 			putchar(i>>8);
 			c = i & 0177;
 			putchar('\b');
-		}
 #endif
+		}
 		if(protofile) write(protofile, p, n);
 		write(1, p, n);
 	}
