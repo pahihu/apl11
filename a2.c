@@ -139,6 +139,10 @@ data d;
 			dp = -dp;
 		}
 		else putchar('+');					/* apl style plus sign, used to be ':' */
+                if (dp > 99) {
+                        putchar(dp/100 + '0');
+                        dp %= 100;
+                }
 		putchar(dp/10 + '0');
 		putchar(dp%10 + '0');
 		return;
