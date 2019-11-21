@@ -500,14 +500,16 @@ EXTERN struct
 #define	reset()	longjmp(gbl_env, 0)		/* "reset" equivalent */
 #define equal(a,b) (0 == strcmp(a,b))	/*	character string equality  */
 
-#ifdef WIN32
-
 #include <float.h>
 #ifdef APL2
-#define MAX_10_EXP	1.0e38
+#define MAX_10_EXP      FLT_MAX
+#define MIN_10_EXP      FLT_MIN
 #else
-#define MAX_10_EXP	1.0e308
+#define MAX_10_EXP	DBL_MAX
+#define MIN_10_EXP	DBL_MIN
 #endif
+
+#ifdef WIN32
 
 #define DEFEDITOR	"notepad"
 #define DEFSHELL	"cmd"
@@ -520,12 +522,6 @@ extern int os_write();
 extern int os_close();
 
 #else
-
-#ifdef APL2
-#define	MAX_10_EXP	1.0e38
-#else
-#define MAX_10_EXP	1.0e308
-#endif
 
 #define DEFEDITOR	"vi"
 #define DEFSHELL	"/bin/sh"

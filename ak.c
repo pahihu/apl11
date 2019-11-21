@@ -62,7 +62,7 @@ scan0(k)
 			q->datap[0] = MAX_10_EXP;
 			break;
 	case MAX:
-			q->datap[0] = -MAX_10_EXP;
+			q->datap[0] = MIN_10_EXP;
 			break;
 	default:
 			error("scan identity");
