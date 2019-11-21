@@ -503,11 +503,11 @@ EXTERN struct
 #include <float.h>
 #ifdef APL2
 #define MAX_10_EXP      FLT_MAX
-#define MIN_10_EXP      FLT_MIN
 #else
 #define MAX_10_EXP	DBL_MAX
-#define MIN_10_EXP	DBL_MIN
 #endif
+
+#define MIN_10_EXP      (-MAX_10_EXP)
 
 #ifdef WIN32
 
