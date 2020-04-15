@@ -4,7 +4,7 @@ APL\11
 This APL\11 is based on the apl11 source archive found in the Waterloo
 APL archive.  This version has various Windows console keyboard interfaces,
 using fixed-width console fonts, the APL! transliteration scheme on UNIX,
-and UTF-8 terminal input under macOS.
+and UTF-8 terminal input under macOS. **Note** it works in 32bit mode only!
 
 Slightly extended with spawn() and TCP/IP support.
 
